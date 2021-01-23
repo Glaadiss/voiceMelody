@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+knox = "==0.1.11"
+djangorestframework = "==3.12.2"
+ffmpeg = "*"
+spleeter = "*"
+Django = "==3.1.5"
+django-cors-headers = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
