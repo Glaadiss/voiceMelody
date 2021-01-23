@@ -12,6 +12,7 @@ class SeparateSongThread(threading.Thread):
         super(SeparateSongThread, self).__init__(**kwargs)
 
     def run(self):
+<<<<<<< HEAD
 
         self.instance.is_separating = True
         self.instance.save()
@@ -30,4 +31,17 @@ class SeparateSongThread(threading.Thread):
         message = "Hello world"
         email_from = settings.EMAIL_HOST_USER
         recipient_list = [self.instance.user.email]
+=======
+        separator = Separator("spleeter:2stems")
+        MEDIA_ROOT = os.path.join(BASE_DIR, "results")
+
+        separator.separate_to_file(self.instance.song.path, MEDIA_ROOT)
+
+        subject = f"Piosenka {self.instance.title} gotowa!"
+        message = "Hello world"
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = [
+            "bartekgladys@gmail.com",
+        ]
+>>>>>>> 42aaa62... Add SeparateSongThread
         send_mail(subject, message, email_from, recipient_list)
