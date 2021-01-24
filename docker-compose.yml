@@ -1,0 +1,44 @@
+version: "3.9"
+   
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/      
+
+  web:
+    build: .
+    # command: gunicorn voiceMelody.wsgi -b 0.0.0.0:8000 --timeout 180 --log-level debug
+    command: python manage.py runserver 0.0.0.0:8000
+    environment: 
+      - DEFAULT_EMAIL_USER=${DEFAULT_EMAIL_USER}
+      - DEFAULT_EMAIL_PASSWORD=${DEFAULT_EMAIL_PASSWORD}
+    volumes:
+      - .:/code
+    # ports:
+    #   - "8000:8000"          
+    expose:
+      - 8000
+    depends_on:
+      - db
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+    ports:
+      - 1337:80
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
+  static_volume:      
+
+
+# networks:
+#   default:
+#     driver: bridge
