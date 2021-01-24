@@ -43,4 +43,10 @@ class ChangePasswordSerializer(serializers.Serializer):
 class SongSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Song
-        fields = ("id", "title", "song")
+        fields = ("id", "title", "song", "voice", "melody")
+
+    def create(self, validated_data):
+        request = self.context.get("request")
+        user_id = request.auth.payload.get("user_id")
+        validated_data["user_id"] = user_id
+        return super().create(validated_data)
