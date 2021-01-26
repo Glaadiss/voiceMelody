@@ -6,11 +6,6 @@ from rest_framework.views import APIView
 from .serializers import MyTokenObtainPairSerializer, CustomUserSerializer
 
 
-class ObtainTokenPairWithColorView(TokenObtainPairView):
-    permission_classes = (permissions.AllowAny,)
-    serializer_class = MyTokenObtainPairSerializer
-
-
 class CustomUserCreate(APIView):
     permission_classes = (permissions.AllowAny,)
 
@@ -22,3 +17,8 @@ class CustomUserCreate(APIView):
                 json = serializer.data
                 return Response(json, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+             
+class ObtainTokenPairWithColorView(TokenObtainPairView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = MyTokenObtainPairSerializer
