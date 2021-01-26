@@ -2,21 +2,25 @@ from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import serializers, viewsets, generics, permissions, status
-from .serializers import SongSerializer, UserSerializer, RegisterSerializer, ChangePasswordSerializer
+from .serializers import SongSerializer, UserSerializer, RegisterSerializer
 from .models import Song
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.core import serializers
+
+# from knox.models import AuthToken
 from django.contrib.auth import login
 from rest_framework.authtoken.serializers import AuthTokenSerializer
-from django.contrib.auth.models import Userizer, User 
+
+# from knox.views import LoginView as KnoxLoginView
+from django.contrib.auth.models import User
+from .serializers import ChangePasswordSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.http import Http404
 
-
 class SongViewSet(viewsets.ModelViewSet):
-    serializer_class = SongSerializer   
     queryset = Song.objects.all()
+    serializer_class = SongSerializer
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -118,3 +122,4 @@ class SongViewSet(viewsets.ModelViewSet):
 #             return Response(response)
 
 #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
