@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.3"
    
 services:
   db:
@@ -14,9 +14,7 @@ services:
     build: .
     # command: gunicorn voiceMelody.wsgi -b 0.0.0.0:8000 --timeout 180 --log-level debug
     command: python manage.py runserver 0.0.0.0:8000
-    environment: 
-      - DEFAULT_EMAIL_USER=${DEFAULT_EMAIL_USER}
-      - DEFAULT_EMAIL_PASSWORD=${DEFAULT_EMAIL_PASSWORD}
+    env_file: .env
     volumes:
       - .:/code
     # ports:
