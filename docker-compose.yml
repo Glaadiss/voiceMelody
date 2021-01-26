@@ -33,6 +33,10 @@ services:
       - 1337:80
     depends_on:
       - web
+  front:
+    image: voice-melody-front
+    ports:
+      - 80:80    
 
 volumes:
   postgres_data:
