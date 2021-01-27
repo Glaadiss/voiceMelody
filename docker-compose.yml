@@ -12,13 +12,10 @@ services:
 
   web:
     build: .
-    # command: gunicorn voiceMelody.wsgi -b 0.0.0.0:8000 --timeout 180 --log-level debug
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn voiceMelody.wsgi -b 0.0.0.0:8000 --timeout 180 --log-level debug
     env_file: .env
     volumes:
-      - .:/code
-    # ports:
-    #   - "8000:8000"          
+      - .:/code         
     expose:
       - 8000
     depends_on:
@@ -34,7 +31,21 @@ services:
   front:
     image: voice-melody-front
     ports:
-      - 80:80    
+      - 1338:80    
+  nginx_front:
+    image: nginx:1.15-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./data/nginx:/etc/nginx/conf.d
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot    
 
 volumes:
   postgres_data:
