@@ -1,24 +1,26 @@
-# Voice Melody frontend application
+# Voice Melody application
 
-Frontend application for vocal-accompaniment separation
+Backend and entry point for vocal-accompaniment separation application
 
 ## Usage 
 
-Use the [docker](https://www.docker.com) in order to run this app as a component.
+You need [docker-compose](https://docs.docker.com/compose/) and build [frontend app](https://github.com/martaokon/voice-melody) in order to run this app 
 
 ```bash
-# build frontend-app image
-docker build -t voice-melody-front .
+# build and run all dependencies
+docker-compose up -d
+
+# configure admin account with default credentials
+./setup_admin.sh
 ```
 
 ## Development
 
-```bash
-# installing all dependencies
-yarn
+If you want to run this app locally without docker-compose, you need to either run postgresql with docker image or switch to sqlite by changing settings in the configuration file.
 
-# run react app
-yarn start
+```bash
+# start django server
+python manage.py runserver
 ```
 
 ## Contributing
